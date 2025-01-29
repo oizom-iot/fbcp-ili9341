@@ -498,7 +498,7 @@ int InitSPI()
 
 #define BCM2835_PERI_BASE               0x3F000000
 #define BCM2835_GPIO_BASE               0x200000
-#define BCM2835_SPI0_BASE               0x204000
+#define BCM2835_SPI0_BASE               0x215080
   printk("ioremapping %p\n", (void*)(BCM2835_PERI_BASE+BCM2835_GPIO_BASE));
   void *bcm2835 = ioremap(BCM2835_PERI_BASE+BCM2835_GPIO_BASE, 32768);
   printk("Got bcm address %p\n", bcm2835);
