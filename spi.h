@@ -135,13 +135,13 @@ typedef struct __attribute__((packed)) SPITask
 
 } SPITask;
 
-#define BEGIN_SPI_COMMUNICATION() do { spi->cs = BCM2835_SPI1_BASE | DISPLAY_SPI_DRIVE_SETTINGS; } while(0)
+#define BEGIN_SPI_COMMUNICATION() do { spi->cs = BCM2835_SPI0_CS_TA | DISPLAY_SPI_DRIVE_SETTINGS; } while(0)
 #define END_SPI_COMMUNICATION()  do { \
     uint32_t cs; \
-    while (!(((cs = spi->cs) ^ BCM2835_SPI1_BASE) & (BCM2835_SPI0_CS_DONE | BCM2835_SPI1_BASE))) /* While TA=1 and DONE=0*/ \
+    while (!(((cs = spi->cs) ^ BCM2835_SPI0_CS_TA) & (BCM2835_SPI0_CS_DONE | BCM2835_SPI0_CS_TA))) /* While TA=1 and DONE=0*/ \
     { \
       if ((cs & (BCM2835_SPI0_CS_RXR | BCM2835_SPI0_CS_RXF))) \
-        spi->cs = BCM2835_SPI0_CS_CLEAR_RX | BCM2835_SPI1_BASE | DISPLAY_SPI_DRIVE_SETTINGS; \
+        spi->cs = BCM2835_SPI0_CS_CLEAR_RX | BCM2835_SPI0_CS_TA | DISPLAY_SPI_DRIVE_SETTINGS; \
     } \
     spi->cs = BCM2835_SPI0_CS_CLEAR_RX | DISPLAY_SPI_DRIVE_SETTINGS; /* Clear TA and any pending bytes */ \
   } while(0)
@@ -151,7 +151,7 @@ typedef struct __attribute__((packed)) SPITask
     while (!((cs = spi->cs) & BCM2835_SPI0_CS_DONE)) /* While DONE=0*/ \
     { \
       if ((cs & (BCM2835_SPI0_CS_RXR | BCM2835_SPI0_CS_RXF))) \
-        spi->cs = BCM2835_SPI0_CS_CLEAR_RX | BCM2835_SPI1_BASE | DISPLAY_SPI_DRIVE_SETTINGS; \
+        spi->cs = BCM2835_SPI0_CS_CLEAR_RX | BCM2835_SPI0_CS_TA | DISPLAY_SPI_DRIVE_SETTINGS; \
     } \
   } while(0)
 
