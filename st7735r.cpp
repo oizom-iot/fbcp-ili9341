@@ -26,6 +26,7 @@ void InitST7735R()
   __sync_synchronize();
 
   BEGIN_SPI_COMMUNICATION();
+  printf("Begin Done\n");
   {
 #ifndef ST7789VW // For some reason, ST7789VW does not want to accept the Software Reset command, but screen stays black if SWRESET is sent to it.
     SPI_TRANSFER(0x01/*Software Reset*/);
